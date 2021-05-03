@@ -9,7 +9,7 @@ public class Main {
     public static final String DIRECTORY_NAME = "D:\\GSDAM\\Programación";
     public static void main(String[] args) {
         /**
-         * DirectoriesAndFiles.getPropertiesAndDirectoryContent ();
+         *
          * File[] files =  DirectoriesAndFiles.getPropertiesAndDirectoryContent (DirectoriesAndFiles.getDirectoryName ());
 
         try {
@@ -17,11 +17,17 @@ public class Main {
         }catch (IOException e){
             System.out.println ("Noseke" );
         }
-        }*/
+        }
         try {
-            DirectoriesAndFiles.readFile (DirectoriesAndFiles.getDirectoryName ( ));
+            DirectoriesAndFiles.createTextFile ();
         }catch (IOException e){
             System.out.println ("ñaña" );
+
         }
+         File file = DirectoriesAndFiles.createTextFile();
+         */
+
+            System.out.println(DirectoriesAndFiles.txtReader(new File("C:\\Users\\caguilar\\Desktop\\pruebita.txt")));
+
         }
 }
