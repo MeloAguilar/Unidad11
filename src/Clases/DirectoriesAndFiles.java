@@ -10,25 +10,30 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class DirectoriesAndFiles {
-    /**
-     * 1-
-     * Haz un subprograma que liste el contenido del directorio actual, usando File
-     */
-    private static Scanner sc = new Scanner(System.in);
+
+    private static Scanner sc = new Scanner (System.in);
     public static final String PATHSTRING = "write the path down below";
     public static final String NAMESTRING = "Write de name of that brand new file";
     public static final String PADCSTRING = "Write the directory path down below:";
 
+
+    /**
+     * 1-
+     * Haz un subprograma que liste el contenido del directorio actual, usando File
+     *
+     * Precondiciones: path debe ser una ruta validada
+     */
     public static File[] getDirectoryContent(String path) {
-        File directoryFiles = new File(path);
+        File directoryFiles = new File (path);
         File[] files = null;
-        if (directoryFiles.exists()) {
-            files = directoryFiles.listFiles();
+        if (directoryFiles.exists ( )) {
+            files = directoryFiles.listFiles ( );
         } else {
-            System.out.println("The directory you're looking for does not exist...");
+            System.out.println ("The directory you're looking for does not exist...");
         }
         return files;
     }
+
 
     /**
      * 2-
@@ -38,7 +43,7 @@ public class DirectoriesAndFiles {
 
     private static String getisHidenString(File file) {
         String isHiden = "";
-        if (file.isHidden()) {
+        if (file.isHidden ( )) {
             isHiden = "this file is hidden";
         } else {
             isHiden = "this file is not hidden";
@@ -47,7 +52,7 @@ public class DirectoriesAndFiles {
     }
 
     /**
-     * 3-4-
+     * 3-
      * - Modifica el ejercicio anterior devolviendo un array de objetos que contengan el
      * nombre de un fichero o carpeta dentro de la ruta recibida, si es un fichero o un directorio, la fecha
      * de modificación, si es oculto y su tamaño (sólo ficheros).
@@ -55,110 +60,151 @@ public class DirectoriesAndFiles {
      */
 
     public static File[] getPropertiesAndDirectoryContent(String path) {
-        File[] files = getDirectoryContent(path);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        File[] files = getDirectoryContent (path);
+        SimpleDateFormat dateFormat = new SimpleDateFormat ("dd-MM-yyyy HH:mm:ss");
         for (int i = 0; i < files.length; i++) {
             File file = files[i];
-            System.out.println(String.format("%s (%s) - %s - %s - %d",
-                    file.getName(),
-                    file.isDirectory() ? "Directory" : "File",
-                    dateFormat.format(file.lastModified()),
-                    getisHidenString(file),
-                    file.length()));
+            System.out.println (String.format ("%s (%s) - %s - %s - %d",
+                    file.getName ( ),
+                    file.isDirectory ( ) ? "Directory" : "File",
+                    dateFormat.format (file.lastModified ( )),
+                    getisHidenString (file),
+                    file.length ( )));
         }
         return files;
     }
 
     /**
-     * 5-
+     * 4-
      * Método que comprueba y devuelve un String introducido por teclado por el
      * Usuario que debe ser un directorio.
      *
      * @return
      */
-    public static String getDirectoryName() throws IOException {
+    public static String getDirectoryName() {
         File directory = null;
         var path = "";
-        do {
-            System.out.println(PADCSTRING);
-            path = sc.nextLine();
-            directory = new File(path);
-        } while (!directory.exists() && !directory.createNewFile());
+        try {
+            do {
+                System.out.println (PADCSTRING);
+                path = sc.nextLine ( );
+                directory = new File (path);
+            } while (!directory.exists ( ) && !directory.createNewFile ( ));
+        } catch (IOException | SecurityException exception) {
+            System.out.println ("Noze rmano");
+        }
         return path;
     }
 
 
     /**
-     * 6-
+     * 5-
      * Crea el método muestraContenido que recibe una ruta y devuelve un array con
      * un listado con los nombres de los ficheros y carpetas contenidos en ella, ordenados
      * alfabéticamente
      */
 
     public static File[] showContent(String path) {
-        File[] files = getDirectoryContent(path);
-        Arrays.sort(files);
+        File[] files = getDirectoryContent (path);
+        Arrays.sort (files);
         return files;
     }
 
-    public static String txtReader(File file) {
-        String loco = "";
-        String madreMia = "";
-        try {
-            int c;
-            FileReader buffer = new FileReader(file);
 
-            BufferedReader input = new BufferedReader(buffer);
-            while ((madreMia = input.readLine()) != null) {
-                loco += madreMia + "\n";
-            }
-        } catch (IOException e) {
-            System.out.println("Can´t open the file");
-        }
-        return loco;
-    }
+
 
     /**
-     * 7-
+     * 6-
      * Realiza un programa para crear un fichero de texto que contenga las cadenas de
      * caracteres suministradas desde la línea de comandos, una en cada línea del fichero de texto.
      */
 
+    /**
+     * <h2>txtReader()</h2>
+     *
+     * Método que lee un archivo y lo convierte
+     * en un String separado por lineas.
+     *
+     * Precondiciones:
+     * Postcondiciones:
+     * @param file:
+     * @return: String loco que contendrá el archivo completo
+     * pasado a String
+     */
+    public static String txtReader(File file) {
+        var loco = "";
+        String madreMia;
+        BufferedReader input = null;
+        try {
+            FileReader buffer = new FileReader (file);//Creamos el FileReader
+            input = new BufferedReader (buffer);//
+            while ((madreMia = input.readLine ( )) != null) {
+                loco += madreMia + "\n";
+            }//end while
+            input.close ( );
+        } catch (IOException e) {
+            System.out.println ("Can´t open the file");
+        }
+        return loco;
+    }
+
+
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
     public static File createTextFile() throws IOException {
         boolean exit = false;
         BufferedWriter output = null;
         File file = null;
         while (!exit) {
             try {
+                System.out.println (NAMESTRING);
+                String name = sc.nextLine ( );
+                if (name.endsWith (".txt") || name.endsWith (".bin")) {
+                    file = new File (name);
+                    output = new BufferedWriter (new FileWriter (file));
+                    do {
+                        System.out.println ("Write a String down below");
+                        String string = sc.nextLine ( );
+                        output.write (string);
+                        System.out.println ("do you want to keep writing? \n--yes       --no");
+                        if (sc.nextLine ( ).equals ("no")) {
+                            exit = true;
+                        } else {
+                            System.out.println ("Ok!");
+                            output.newLine ( );
+                        }
 
-                System.out.println(NAMESTRING);
-                String name = sc.nextLine();
-                file = new File(name);
-                output = new BufferedWriter(new FileWriter(file));
-                do {
-                    System.out.println("Write a String down below");
-                    String string = sc.nextLine();
-                    output.write(string);
-                    System.out.println("do you want to keep writing? \n--yes       --no");
-                    if (sc.nextLine().equals("no")) {
-                        exit = true;
-                    } else {
-                        System.out.println("Ok!");
-                        output.newLine();
                     }
-
+                    while (!exit);
                 }
-                while (!exit);
             } catch (IllegalArgumentException | SecurityException e) {
-                System.out.println("Something was not where it should be");
+                System.out.println ("Something was not where it should be");
 
             } finally {
                 if (output != null)
-                    output.close();
+                    output.close ( );
             }
+
 
         }
 
         return file;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
