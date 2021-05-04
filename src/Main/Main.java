@@ -1,7 +1,7 @@
 package Main;
 
 import Clases.DirectoriesAndFiles;
-import Clases.Ejercicio7.UpperPasswordCase;
+import Clases.Ejercicio7.PropertiesAndDirectoryContent;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,11 +12,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner (System.in);
 
-            UpperPasswordCase un = new UpperPasswordCase("String");
-            un.unlockFile(sc, 3);
-
-
-
+        File pene = new File ("D:\\GSDAM\\cosa.txt");
+        PropertiesAndDirectoryContent pf = new PropertiesAndDirectoryContent (pene);
+        System.out.println (pf );
 
         sc.close ();
         }

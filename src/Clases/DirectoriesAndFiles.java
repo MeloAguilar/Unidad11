@@ -41,7 +41,7 @@ public class DirectoriesAndFiles {
      * archivo cuyo nombre será suministrado por el usuario
      */
 
-    private static String getisHidenString(File file) {
+    public static String getisHidenString(File file) {
         String isHiden = "";
         if (file.isHidden ( )) {
             isHiden = "this file is hidden";
@@ -51,28 +51,7 @@ public class DirectoriesAndFiles {
         return isHiden;
     }
 
-    /**
-     * 3-
-     * - Modifica el ejercicio anterior devolviendo un array de objetos que contengan el
-     * nombre de un fichero o carpeta dentro de la ruta recibida, si es un fichero o un directorio, la fecha
-     * de modificación, si es oculto y su tamaño (sólo ficheros).
-     * En lugar de el 3 he modificado el 2, ya que solo tenía que añadir si era oculto o no.
-     */
 
-    public static File[] getPropertiesAndDirectoryContent(String path) {
-        File[] files = getDirectoryContent (path);
-        SimpleDateFormat dateFormat = new SimpleDateFormat ("dd-MM-yyyy HH:mm:ss");
-        for (int i = 0; i < files.length; i++) {
-            File file = files[i];
-            System.out.println (String.format ("%s (%s) - %s - %s - %d",
-                    file.getName ( ),
-                    file.isDirectory ( ) ? "Directory" : "File",
-                    dateFormat.format (file.lastModified ( )),
-                    getisHidenString (file),
-                    file.length ( )));
-        }
-        return files;
-    }
 
     /**
      * 4-
