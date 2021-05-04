@@ -24,7 +24,7 @@ public class UpperPasswordCase {
 
     public String getPassWord() {
         String lockedPassword = "";
-        for (int i = 0; i < passWord.length ( ); i++) lockedPassword += "*";
+        for (int i = 0; i < passWord.length(); i++) lockedPassword += "*";
         return lockedPassword;
     }
 
@@ -32,8 +32,8 @@ public class UpperPasswordCase {
         this.passWord = passWord;
     }
 
-    public static void text(){
-        System.out.println (INTRODUCEPASS );
+    public static void text() {
+        System.out.println(INTRODUCEPASS);
     }
 
     /**
@@ -43,34 +43,33 @@ public class UpperPasswordCase {
      */
 
 
-
-
-    public void unlockFile(Scanner sc, int tries){
+    public void unlockFile(Scanner sc, int tries) {
         boolean unlock = false;
         String attempt = "";
-        FileWriter output = null;
-        FileReader input = null;
+
         for (int i = 0; i < tries && !unlock; i++) {
-            text ();//Muestra el String para indicar que debe introducir datos
+            text();//Muestra el String para indicar que debe introducir datos
             //se pide al usuario que introduzca el intento por teclado.
-            if ((attempt = sc.nextLine ( )).equals (this.passWord)) {
+            if ((attempt = sc.nextLine()).equals(this.passWord)) {
                 unlock = true;//Si lo que ha escrito el usuario es igual a la contraseña establecida unlock será true;
             }
         }
-        if(unlock){
-            String path = DirectoriesAndFiles.getDirectoryName ();
-            File file = new File (path);
-            try{
-                int c = 0;
-                input = new FileReader (file);
-                BufferedReader it = new BufferedReader (input);
-                output = new FileWriter ((DirectoriesAndFiles.getDirectoryName ()));
-               String read = it.readLine ();
-                for(int i = 0;i < read.length (); i++){
+        if (unlock) {
+            String path = DirectoriesAndFiles.getDirectoryName();
+            File file = new File(path);
+            if(file.exists() && path.endsWith(".txt")) {
+                BufferedWriter in = null;
+                try {
+                    BufferedReader it = new BufferedReader( new FileReader(file));
+                    in = new BufferedWriter(new FileWriter((DirectoriesAndFiles.getDirectoryName())));
+                    String read = it.readLine();
+                    for (int i = 0; i < read.length() && read != null; i++) {
+                        in.write(read.toCharArray()[i]);
 
+                    }
+                } catch (IOException e) {
+                    System.out.println("Me cago en mis muertos");
                 }
-            }catch(IOException e){
-
             }
         }
     }

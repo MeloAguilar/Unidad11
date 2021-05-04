@@ -1,6 +1,7 @@
 package Main;
 
 import Clases.DirectoriesAndFiles;
+import Clases.Ejercicio7.UpperPasswordCase;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +12,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner (System.in);
 
+            UpperPasswordCase un = new UpperPasswordCase("String");
+            un.unlockFile(sc, 3);
 
 
 
