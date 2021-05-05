@@ -7,7 +7,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class DirectoriesAndFiles {
 
@@ -20,7 +22,7 @@ public class DirectoriesAndFiles {
     /**
      * 1-
      * Haz un subprograma que liste el contenido del directorio actual, usando File
-     *
+     * <p>
      * Precondiciones: path debe ser una ruta validada
      */
     public static File[] getDirectoryContent(String path) {
@@ -52,9 +54,8 @@ public class DirectoriesAndFiles {
     }
 
 
-
     /**
-     * 4-
+     * 2-
      * Método que comprueba y devuelve un String introducido por teclado por el
      * Usuario que debe ser un directorio.
      *
@@ -77,7 +78,7 @@ public class DirectoriesAndFiles {
 
 
     /**
-     * 5-
+     * 3-
      * Crea el método muestraContenido que recibe una ruta y devuelve un array con
      * un listado con los nombres de los ficheros y carpetas contenidos en ella, ordenados
      * alfabéticamente
@@ -90,22 +91,21 @@ public class DirectoriesAndFiles {
     }
 
 
-
-
     /**
-     * 6-
+     * 4-
      * Realiza un programa para crear un fichero de texto que contenga las cadenas de
      * caracteres suministradas desde la línea de comandos, una en cada línea del fichero de texto.
      */
 
     /**
      * <h2>txtReader()</h2>
-     *
+     * <p>
      * Método que lee un archivo y lo convierte
      * en un String separado por lineas.
-     *
+     * <p>
      * Precondiciones:
      * Postcondiciones:
+     *
      * @param file:
      * @return: String loco que contendrá el archivo completo
      * pasado a String
@@ -115,9 +115,9 @@ public class DirectoriesAndFiles {
         String madreMia;
         BufferedReader input = null;
         try {
-            FileReader buffer = new FileReader (file);//Creamos el FileReader
-            input = new BufferedReader (buffer);//
-            while ((madreMia = input.readLine ( )) != null) {
+            FileReader buffer = new FileReader (file);//Creamos el lector de caracteres
+            input = new BufferedReader (buffer);//Creamos el lector de Strings
+            while ((madreMia = input.readLine ( )) != null) {//mientras que la linea de Strings que lee input no sea null
                 loco += madreMia + "\n";
             }//end while
             input.close ( );
@@ -129,11 +129,10 @@ public class DirectoriesAndFiles {
 
 
     /**
-     *
      * @return
      * @throws IOException
      */
-    public static File createTextFile() throws IOException {
+    public static File createAndWriteFile() throws IOException {
         boolean exit = false;
         BufferedWriter output = null;
         File file = null;
@@ -155,35 +154,79 @@ public class DirectoriesAndFiles {
                             System.out.println ("Ok!");
                             output.newLine ( );
                         }
-
                     }
                     while (!exit);
                 }
             } catch (IllegalArgumentException | SecurityException e) {
                 System.out.println ("Something was not where it should be");
-
             } finally {
                 if (output != null)
                     output.close ( );
             }
-
-
         }
-
         return file;
     }
 
 
+    /**
+     * Crea un método que reciba la ruta de un archivo de texto y devuelva un array de
+     * objetos con los caracteres del alfabeto ordenados según su frecuencia de aparición (primero el
+     * carácter que más veces aparece, luego el segundo que más aparece, etc), indicando también el
+     * número de veces que aparece cada carácter.
+     */
 
+    private static char[][] crearPatron(String pattern){
+        char[] patternCharArray = pattern.toCharArray ( );
+        char[][] charArray = new char[27][];
+        for(int i = 0; i < charArray.length; i++) {
+            char[] support = new char[10000];
 
+                support[0] = patternCharArray[i];
 
+            charArray[i] = support;
+        }
+        return charArray;
+}
 
+    public static char[][] fileCharacterTreeMap(String path) {
+        String pattern = "abcdefghijklmnñopqrstuvwxyz";
+        char[][] este = crearPatron (pattern);
 
+        String output = txtReader (new File (path));
+        char[] support = output.toCharArray ( );
+        for (int j = 0; j < output.length ( ); j++) {
+            boolean match = false;
+            for (int k = 0; k < pattern.length ( ) && !match; k++) {
+                if(pattern.toCharArray ()[k] == output.toCharArray ()[j]) {
+                    este[k][j+1] += pattern.toCharArray ( )[k];
+                    match = true;
+                }
+            }
 
+        } return este;
+    }
 
+    public static Map<Character, Integer> ordenarYContarCaracteres(char[][] charArray) {
+        TreeMap<Character, Integer> caracteres = new TreeMap<> ( );
 
+        for (int i = 0; i < charArray.length; i++) {
+            int contador = 0;
+            for(int j = 0; j < charArray[i].length; j++) {
+                if(charArray[i][j] == charArray[i][0])
+                contador++;
 
+            }
+            caracteres.put (charArray[i][0], contador);
+        }
+        return caracteres;
+    }
 
-
+    private static TreeMap<Character, Integer> sortByInteger(Map<Character, Integer> characterIntegerTreeMap){
+        for(int i = 0; i < characterIntegerTreeMap.size (); i++){
+            for(int j = 0; j < characterIntegerTreeMap.size()-i; j++){
+                if(characterIntegerTreeMap[i] > characterIntegerTreeMap[j])
+            }
+        }
+    }
 
 }
