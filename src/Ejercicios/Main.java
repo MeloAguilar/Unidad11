@@ -1,25 +1,16 @@
-package Main;
+package Ejercicios;
 
-import Clases.DirectoriesAndFiles;
-import Clases.Ejercicio7.PropertiesAndDirectoryContent;
+import Clases.Ejercicio8.Ejercicio8;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeMap;
 
 public class Main {
     public static final String DIRECTORY_NAME = "D:\\GSDAM\\cosa.txt";
 
     public static void main(String[] args) {
         Scanner sc = new Scanner (System.in);
-        char[][] n = DirectoriesAndFiles.fileCharacterTreeMap (DIRECTORY_NAME);
 
-        TreeMap<Character, Integer> c = new TreeMap<> (  );
-        c = DirectoriesAndFiles.ordenarYContarCaracteres (n);
-        Set<Character> d = c.keySet ();
-        System.out.println (d + "\n" + c.values ());
+
 
     }
 }

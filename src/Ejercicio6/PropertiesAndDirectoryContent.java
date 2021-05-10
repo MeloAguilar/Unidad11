@@ -1,13 +1,9 @@
-package Clases.Ejercicio7;
-
-import Clases.DirectoriesAndFiles;
+package Ejercicio6;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 /**
  * Diseña un programa con contraseña, que será suministrada desde la línea de
@@ -40,17 +36,16 @@ public class PropertiesAndDirectoryContent {
      * - Modifica el ejercicio anterior devolviendo un array de objetos que contengan el
      * nombre de un fichero o carpeta dentro de la ruta recibida, si es un fichero o un directorio, la fecha
      * de modificación, si es oculto y su tamaño (sólo ficheros).
-     * En lugar de el 3 he modificado el 2, ya que solo tenía que añadir si era oculto o no.
      */
 
     private static String getStringLastModified(File file){
-
         //Declaras el formato de String
         SimpleDateFormat dateFormat = new SimpleDateFormat ("dd-MM-yyyy HH:mm:ss");
         String date = dateFormat.format (file.lastModified ( ));
         //Declaras el formato del localdate
         return date;
     }
+
     private static LocalDate getLastModified(String string){
         //declaras Localdate
         LocalDate lpmdtm = null;
@@ -64,6 +59,6 @@ public class PropertiesAndDirectoryContent {
     @Override
     public String toString() {
         return String.format ("Name --> %s\nIs %s\n %s\nLast modified --> %s\nFile length --> %d",
-                name, isDirectory ? "Directory" : "File", DirectoriesAndFiles.getisHidenString (file), getStringLastModified (file), fileLegth);
+                name, isDirectory ? "Directory" : "File", Ejercicio2.Main.getisHidenString (file), getStringLastModified (file), fileLegth);
     }
 }
